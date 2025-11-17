@@ -1,19 +1,14 @@
-# tests/test_views/test_login_view.py
-
-import pytest
-import tkinter as tk
-from app.views.login_view import LoginView
+import unittest
+from app.services.login_services import authenticate
 
 
-def test_login_view_creation():
-    root = tk.Tk()
-    view = LoginView(root, lambda: None)
+class TestAuthService(unittest.TestCase):
 
-    # Ensure Tkinter frame created
-    assert view is not None
+    def test_auth_success(self):
+        self.assertTrue(authenticate("admin", "admin123"))
 
-    # Ensure username + password fields exist
-    assert hasattr(view, "username_entry")
-    assert hasattr(view, "password_entry")
+    def test_auth_fail_username(self):
+        self.assertFalse(authenticate("wrong", "admin123"))
 
-    root.destroy()
+    def test_auth_fail_password(self):
+        self.assertFalse(authenticate("admin", "badpass"))
