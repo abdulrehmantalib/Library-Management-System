@@ -1,19 +1,19 @@
-# tests/test_views/test_login_view.py
-
-import pytest
+import unittest
 import tkinter as tk
 from app.views.login_view import LoginView
 
 
-def test_login_view_creation():
-    root = tk.Tk()
-    view = LoginView(root, lambda: None)
+class TestLoginView(unittest.TestCase):
 
-    # Ensure Tkinter frame created
-    assert view is not None
+    def test_view_renders(self):
+        root = tk.Tk()
+        view = LoginView(root, lambda: None)
 
-    # Ensure username + password fields exist
-    assert hasattr(view, "username_entry")
-    assert hasattr(view, "password_entry")
+        # Check widget created
+        self.assertIsNotNone(view)
 
-    root.destroy()
+        # Check username/password fields exist
+        self.assertTrue(hasattr(view, "username_entry"))
+        self.assertTrue(hasattr(view, "password_entry"))
+
+        root.destroy()
